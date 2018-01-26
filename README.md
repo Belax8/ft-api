@@ -1,1 +1,1 @@
-# ft-api
+# Fitness Tracker API
