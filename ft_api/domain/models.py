@@ -59,12 +59,59 @@ class AuthToken(SimplifyModel):
         db_table = 'auth_token'
 
 
+class Exercise(SimplifyModel):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', null=False, related_name='exercise')
+    exercise_type = models.ForeignKey('ExerciseType', null=False, related_name='exercise')
+    created = models.DateTimeField(default=timezone.now)
+    start_time = models.DateTimeField(null=False, default=timezone.now)
+    end_time = models.DateTimeField(null=True, blank=True)
+    comments = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        db_table = 'exercise'
+
+
+class ExerciseType(SimplifyModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    active = models.BooleanField(default=True)
+    multiplier = models.DecimalField(decimal_places=2, max_digits=5)
+
+    class Meta:
+        db_table = 'exercise_type'
+
+
+class FitnessPlan(SimplifyModel):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', null=False, related_name='user')
+    goal_weight = models.DecimalField(decimal_places=2, max_digits=5, null=True, blank=True)
+    created = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'fitness_plan'
+
+
+class FitnessPlanType(SimplifyModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    pounds_per_week = models.DecimalField(decimal_places=2, max_digits=5)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'fitness_plan_type'
+
+
 class User(SimplifyModel):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=80, null=True)
     password = models.CharField(max_length=128)
     first_name = models.CharField(max_length=100, null=False, blank=False)
     last_name = models.CharField(max_length=100, null=False, blank=False)
+    weight = models.DecimalField(decimal_places=2, max_digits=5, null=True, blank=True)
     active = models.BooleanField(null=False, default=True)
     created = models.DateTimeField(null=False, default=timezone.now)
     salt = models.CharField(max_length=50, null=True)
