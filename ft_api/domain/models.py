@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -68,6 +70,40 @@ class Exercise(SimplifyModel):
     end_time = models.DateTimeField(null=True, blank=True)
     comments = models.CharField(max_length=255, null=True, blank=True)
 
+    @property
+    def score(self):
+        if self.start_time and self.end_time and self.exercise_type:
+            diff = self.end_time - self.start_time
+            minutes = diff.total_seconds() / 60
+            return round(minutes * float(self.exercise_type.multiplier), 2)
+        else:
+            return None
+
+    @property
+    def duration(self):
+        if self.start_time and self.end_time:
+            diff = self.end_time - self.start_time
+            return round(diff.total_seconds() / 60, 2)
+        else:
+            return None
+
+    @staticmethod
+    def get_includes():
+        return ['score', 'duration', 'exercise_type']
+
+    @staticmethod
+    def get_filters():
+        return {
+            'end_time__isnull': {
+                'type': bool,
+                'list': False
+            },
+            'start_time__gte': {
+                'type': datetime.datetime,
+                'list': False
+            }
+        }
+
     class Meta:
         db_table = 'exercise'
 
@@ -85,10 +121,15 @@ class ExerciseType(SimplifyModel):
 
 class FitnessPlan(SimplifyModel):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('User', null=False, related_name='user')
+    user = models.ForeignKey('User', null=False, related_name='fitness_plan')
+    fitness_plan_type = models.ForeignKey('FitnessPlanType', null=False, related_name='fitness_plan')
     goal_weight = models.DecimalField(decimal_places=2, max_digits=5, null=True, blank=True)
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(null=True, blank=True)
+
+    @staticmethod
+    def get_includes():
+        return ['fitness_plan_type']
 
     class Meta:
         db_table = 'fitness_plan'
