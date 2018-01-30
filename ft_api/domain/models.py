@@ -155,12 +155,12 @@ class User(SimplifyModel):
     weight = models.DecimalField(decimal_places=2, max_digits=5, null=True, blank=True)
     active = models.BooleanField(null=False, default=True)
     created = models.DateTimeField(null=False, default=timezone.now)
-    salt = models.CharField(max_length=50, null=True)
-    password_reset_token = models.CharField(max_length=50, null=True)
-    password_reset_token_created = models.DateTimeField(null=True)
-    password_reset_ip = models.GenericIPAddressField(null=True)
-    failed_login_attempts = models.IntegerField(null=True, default=0)
-    last_failed_login = models.DateTimeField(null=True)
+    salt = models.CharField(max_length=50, null=True, blank=True)
+    password_reset_token = models.CharField(max_length=50, null=True, blank=True)
+    password_reset_token_created = models.DateTimeField(null=True, blank=True)
+    password_reset_ip = models.GenericIPAddressField(null=True, blank=True)
+    failed_login_attempts = models.IntegerField(null=True, blank=True, default=0)
+    last_failed_login = models.DateTimeField(null=True, blank=True)
 
     # authentication requires an is_active field
     @property

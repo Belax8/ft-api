@@ -1,6 +1,7 @@
 import configurations
 import django
 import os
+import random
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'ft_api.settings'
 # setup the configuration local
@@ -41,3 +42,19 @@ class UserTests(RestFrameworkSignatureTestClass):
         # assert
         self.assertEqual(result.status_code, status.HTTP_200_OK)
         self.assertTrue(len(result.data) > 0)
+
+    def test_put(self):
+        # arrange
+        user = DataGenerator.set_up_user()
+        url = '/users/{0}'.format(user.id)
+        body = {
+            'weight': random.randint(1, 1000)
+        }
+        headers = self.get_headers(url, body)
+
+        # act
+        result = self.api_client.put(url, body, format='json', **headers)
+
+        # assert
+        self.assertEqual(result.status_code, status.HTTP_200_OK)
+        self.assertEqual(result.data['weight'], body['weight'])

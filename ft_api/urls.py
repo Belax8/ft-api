@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^(?P<parent_resource>[a-zA-z]+)/(?P<parent_pk>[0-9]+)/exercises', ExerciseHandler.as_view()),
     url(r'^(?P<parent_resource>[a-zA-z]+)/(?P<parent_pk>[0-9]+)/fitnessPlans', FitnessPlanHandler.as_view()),
     url(r'^exercises/(?P<pk>[0-9]+)$', ExerciseHandler.as_view()),
+    url(r'^exercises$', ExerciseHandler.as_view()),
     url(r'^exerciseTypes/(?P<pk>[0-9]+)$', ExerciseTypeHandler.as_view()),
     url(r'^exerciseTypes$', ExerciseTypeHandler.as_view()),
     url(r'^fitnessPlans/(?P<pk>[0-9]+)$', FitnessPlanHandler.as_view()),
