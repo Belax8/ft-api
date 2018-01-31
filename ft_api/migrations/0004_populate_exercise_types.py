@@ -5,15 +5,15 @@ def create_exercise_types(apps, schema_editor):
     ExerciseType = apps.get_model('ft_api', 'ExerciseType')
 
     types = [
-        {'name': 'jogging', 'description': 'jogging', 'multiplier': 0.40},
-        {'name': 'walking', 'description': 'walking', 'multiplier': 0.05},
-        {'name': 'swimming', 'description': 'swimming', 'multiplier': 0.60},
-        {'name': 'basketball', 'description': 'basketball', 'multiplier': 0.70},
-        {'name': 'soccer', 'description': 'soccer', 'multiplier': 0.70},
-        {'name': 'football', 'description': 'football', 'multiplier': 0.85},
-        {'name': 'lacrosse', 'description': 'lacrosse', 'multiplier': 0.95},
-        {'name': 'frisbee', 'description': 'frisbee', 'multiplier': 0.60},
-        {'name': 'golf', 'description': 'golf', 'multiplier': 0.05}
+        {'name': 'Jogging', 'description': 'Going on a jogging', 'multiplier': 0.40},
+        {'name': 'Walking', 'description': 'Going on a walking', 'multiplier': 0.05},
+        {'name': 'Swimming', 'description': 'Going swimming', 'multiplier': 0.60},
+        {'name': 'Basketball', 'description': 'Playing basketball', 'multiplier': 0.70},
+        {'name': 'Soccer', 'description': 'Playing soccer', 'multiplier': 0.70},
+        {'name': 'Football', 'description': 'Playing football', 'multiplier': 0.85},
+        {'name': 'Lacrosse', 'description': 'Playing lacrosse', 'multiplier': 0.95},
+        {'name': 'Frisbee', 'description': 'Playing frisbee', 'multiplier': 0.60},
+        {'name': 'Golf', 'description': 'Playing golf', 'multiplier': 0.05}
     ]
     for ex_type in types:
         et = ExerciseType(**ex_type)

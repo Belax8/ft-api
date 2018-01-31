@@ -15,4 +15,4 @@ class FitnessPlanHandler(SimplifyView):
             'sub_resource_name': None
         }
         linked_objects.append(user)
-        super().__init__(FitnessPlan, supported_methods=['GET', 'GET_LIST_SUB', 'PUT'], linked_objects=linked_objects)
+        super().__init__(FitnessPlan, supported_methods=['GET', 'GET_LIST_SUB', 'PUT', 'POST'], linked_objects=linked_objects)

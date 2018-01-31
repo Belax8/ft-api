@@ -14,7 +14,8 @@ class DataGenerator:
         if not exercise_type:
             exercise_type = DataGenerator.set_up_exercise_type()
         end_time = datetime.datetime.now()
-        start_time = end_time - datetime.timedelta(hours=1)
+        minutes = random.randint(1, 1000)
+        start_time = end_time - datetime.timedelta(minutes=minutes)
         e = Exercise(user=user, exercise_type=exercise_type, start_time=start_time, end_time=end_time)
         e.save()
         return e

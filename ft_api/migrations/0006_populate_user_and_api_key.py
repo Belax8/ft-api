@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import migrations, models
 
 
@@ -5,6 +7,7 @@ def create_user_and_api_key(apps, schema_editor):
     # You wouldn't do this in a real app
     User = apps.get_model('ft_api', 'User')
     ApiKey = apps.get_model('ft_api', 'ApiKey')
+    AuthToken = apps.get_model('ft_api', 'AuthToken')
 
     # Setup user
     username = 'chris@testing.com'
@@ -23,6 +26,10 @@ def create_user_and_api_key(apps, schema_editor):
     # Setup API Key
     api_key = ApiKey(name='ft-app', access_key='b44493b5-4', secret_access_key='fd4f4b5d-4ef4-4866-8')
     api_key.save()
+
+    # Setup Auth Token
+    auth_token = AuthToken(key=str(uuid.uuid4())[:20], auth_type='password', user=user)
+    auth_token.save()
 
 
 class Migration(migrations.Migration):

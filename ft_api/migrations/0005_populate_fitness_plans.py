@@ -5,9 +5,9 @@ def create_fitness_plan_types(apps, schema_editor):
     FitnessPlanType = apps.get_model('ft_api', 'FitnessPlanType')
 
     types = [
-        {'name': 'light', 'description': 'Lose a quarter lb per week', 'pounds_per_week': 0.25},
-        {'name': 'normal', 'description': 'Lose a half lb per week', 'pounds_per_week': 0.50},
-        {'name': 'hard', 'description': 'Lose 1 lb per week', 'pounds_per_week': 1.00},
+        {'name': 'Light', 'description': 'Lose a quarter lb per week', 'pounds_per_week': 0.25},
+        {'name': 'Normal', 'description': 'Lose a half lb per week', 'pounds_per_week': 0.50},
+        {'name': 'Hard', 'description': 'Lose 1 lb per week', 'pounds_per_week': 1.00},
         {'name': 'Insane', 'description': 'Lose 2 lbs per week', 'pounds_per_week': 2.00}
     ]
     for fp_type in types:
