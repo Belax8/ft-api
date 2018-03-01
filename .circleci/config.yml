@@ -6,21 +6,30 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
+        environment:
+        - PG_HOST=localhost
+        - PG_USER=ubuntu
+      - image: circleci/postgres:9.6
+        environment:
+        - POSTGRES_USER=ubuntu
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
+    working_directory: ~/ft-api
 
     steps:
       - checkout
 
-      # Download and cache dependencies
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: pyodbc dependency
+          command: |
+            sudo apt-get install software-properties-common python-software-properties
+            sudo apt-get update
+            sudo apt-get install python3-dev unixodbc unixodbc-dev unixodbc-bin tdsodbc libstdc++6 libffi-dev libgss3 freetds-dev
+
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}
@@ -39,17 +48,23 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
+      - run:
+          name: setup postgres users
+          command: |
+            sudo apt update
+            sudo apt install postgresql-client
+            sudo -u root psql -p 5432 -h 127.0.0.1 -U postgres -c "CREATE USER ft WITH PASSWORD 'test1234';"
+            sudo -u root psql -p 5432 -h 127.0.0.1 -U postgres -c "ALTER USER ft WITH superuser;"
+
       - run:
           name: run tests
           command: |
+            mkdir xunit
             . venv/bin/activate
-            python manage.py test
+            python manage.py test --with-xunit --xunit-file=./xunit/xunit.xml
+
+      - store_test_results:
+          path: ./xunit
 
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
+          path: ./xunit
