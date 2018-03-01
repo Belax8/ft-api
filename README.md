@@ -1,6 +1,6 @@
 # Fitness Tracker API
 
-[![Circle CI Badge](https://circleci.com/gh/Belax8/ft-api/tree/master.svg?style=shield&circle-token=bee489f88316bda9fd0a6a32d02ed5bb977999e4)](https://circleci.com)
+[![Circle CI Badge](https://circleci.com/gh/Belax8/ft-api/tree/master.svg?style=shield&circle-token=bee489f88316bda9fd0a6a32d02ed5bb977999e4)](https://circleci.com/gh/Belax8/ft-api)
 
 This project was built to show how to use [Django Rest Framework Signature](https://github.com/Skylude/django-rest-framework-signature) and [Django Rest Framework Simplify](https://github.com/Skylude/django-rest-framework-simplify).
 
